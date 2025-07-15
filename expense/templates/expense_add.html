@@ -1,21 +1,43 @@
-{%extends 'base.html'%}
-{%load static%}
-{%block main_block%}
-<div class="container">
-    <div class="row">
-        <div class="col-4"><img src="{% static 'images/exp.png' %}" class="w-100">
-        </div>
-        <div class="col-4 border border-2 shadow rounded p-3 mt-3">
-            <h5 class="text-center fw-bold">Add New Transaction</h5>
-            
-            <form action="" method="post">{%csrf_token%}
-            {{form}}
-            <div class="text-center">
-                <button class="btn btn-outline-success px-4" type="submit">Add</button>
-            </div>
-            
-        </form></div>
-        <div class="col-4"></div>
+{% extends 'base.html' %}
+{% load static %}
+{% block main_block %}
+<div class="container my-5">
+  <div class="row align-items-center justify-content-center g-4">
+
+    <!-- Left Side Image -->
+    <div class="col-md-5">
+      <img src="{% static 'images/exp.png' %}" class="img-fluid rounded shadow" alt="Expense Image" />
     </div>
+
+    <!-- Transaction Form -->
+    <div class="col-md-5">
+      <div class="card shadow border-0 rounded-4">
+        <div class="card-body p-4">
+          <h4 class="text-center fw-bold mb-4">Add New Transaction</h4>
+
+          <!-- Form -->
+          <form action="" method="post">
+            {% csrf_token %}
+
+            <!-- Beautify form manually or via crispy/widget_tweaks if needed -->
+            {% for field in form %}
+              <div class="mb-3">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                  <div class="text-danger small">{{ field.errors|striptags }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+
+            <div class="text-center">
+              <button class="btn btn-success px-5 py-2 rounded-pill" type="submit">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
-{%endblock%}
+{% endblock %}

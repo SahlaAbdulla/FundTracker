@@ -89,13 +89,13 @@ class ExpenseListView(View):
 
             qs=Transaction.objects.filter(category=selected_categories,owner=request.user)
 
-        catogeries=Transaction.objects.all().values_list('category',flat=True).distinct()
+        categories=Transaction.objects.all().values_list('category',flat=True).distinct()
 
         # print(catogeries)
 
         # print(qs)
   
-        return render(request,self.template_name,{"data":qs,"catogeries":catogeries,'selected_categories':selected_categories})
+        return render(request,self.template_name,{"data":qs,"categories":categories,'selected_categories':selected_categories})
     
 @method_decorator(signin_required,name="dispatch")
 class ExpenseDetailView(View):
@@ -262,7 +262,7 @@ class SignInView(View):
 
                 print(request.user)
 
-                return redirect("summaryexpense")
+                return redirect("addexpense")
 
         return render(request,self.template_name,{"form":form_instance})    
     

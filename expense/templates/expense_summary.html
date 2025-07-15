@@ -1,41 +1,75 @@
-{%extends 'base.html'%}
-{%block main_block%}
-<div class="container">
-    <h3>Welcome user {{request.user}}</h3>
-    <div class="w-50 p-3 border border-2 shadow mx-auto mt-5 rounded"> <h3 class="text-center fw-bold">TotalExpense : {{total_expense}}</h3></div>
+{% extends 'base.html' %}
+{% block main_block %}
+<div class="container my-5">
+    <h3 class="text-center mb-4">Welcome, <strong>{{ request.user }}</strong></h3>
 
-    <div class="row mt-5">
-        <div class="col-4 px-2 border">
-            <h5 class="fw-bold text-center my-3">CategorySummary</h5>
-            {%for summary in category_summary%}
-                <div class="border rounded-pill my-2 p-2">
-                    <span>{{summary.category}}</span> <span>{{summary.total}}</span>
+    <!-- Total Expense Card -->
+    <div class="card text-white bg-primary mb-4 mx-auto shadow" style="max-width: 400px;">
+        <div class="card-body text-center">
+            <h4 class="card-title fw-bold">Total Expense</h4>
+            <p class="card-text display-6">₹ {{ total_expense }}</p>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row g-4">
+        <!-- Category Summary -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow">
+                <div class="card-header bg-secondary text-white text-center fw-bold">
+                    Category Summary
                 </div>
-            {%endfor%}
+                <div class="card-body">
+                    {% for summary in category_summary %}
+                        <div class="border rounded-pill my-2 p-2 d-flex justify-content-between px-3" style="background-color: #f8f9fa;">
+    <span style="color: #000; font-weight: 500;">{{ summary.category }}</span>
+    <span style="color: #000; font-weight: 600;">₹ {{ summary.total }}</span>
+</div>
 
-        </div>
-        <div class="col-4 px-2 border">
-            <h5 class="fw-bold text-center my-3">PaymentMethodSummary</h5>
-            {%for summary in payment_summary%}
-            <div class="border rounded-pill my-2 p-2">
-                <span>{{summary.payment_method}}</span> <span>{{summary.total}}</span>
+                    {% empty %}
+                        <p class="text-muted text-center">No data available.</p>
+                    {% endfor %}
+                </div>
             </div>
-            {%endfor%}
-
-
-
         </div>
-        <div class="col-4 px-2 border">
-            <h5 class="fw-bold text-center my-3">PaymentMethodSummary</h5>
-            {%for summary in priority_summary%}
-            <div class="border rounded-pill my-2 p-2">
-                <span>{{summary.priority}}</span> <span>{{summary.total}}</span>
+
+        <!-- Payment Method Summary -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow">
+                <div class="card-header bg-success text-white text-center fw-bold">
+                    Payment Method Summary
+                </div>
+                <div class="card-body">
+                    {% for summary in payment_summary %}
+                        <div class="border rounded-pill my-2 p-2 d-flex justify-content-between px-3" style="background-color: #f8f9fa;">
+    <span style="color: #000; font-weight: 500;">{{ summary.payment_method }}</span>
+    <span style="color: #000; font-weight: 600;">₹ {{ summary.total }}</span>
+</div>
+                    {% empty %}
+                        <p class="text-muted text-center">No data available.</p>
+                    {% endfor %}
+                </div>
             </div>
-            {%endfor%}
         </div>
-    </div>
-  </div>
 
-
-
-{%endblock%}
+        <!-- Priority Summary -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow">
+                <div class="card-header bg-warning text-dark text-center fw-bold">
+                    Priority Summary
+                </div>
+                <div class="card-body">
+                    {% for summary in priority_summary %}
+                        <div class="border rounded-pill my-2 p-2 d-flex justify-content-between px-3" style="background-color: #f8f9fa;">
+    <span style="color: #000; font-weight: 500;">{{ summary.priority }}</span>
+    <span style="color: #000; font-weight: 600;">₹ {{ summary.total }}</span>
+</div>
+                    {% empty %}
+                        <p class="text-muted text-center">No data available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
